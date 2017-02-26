@@ -1,0 +1,25 @@
+From ebd1f383e20f59cf083a04023750419610cde78e Mon Sep 17 00:00:00 2001
+From: Orivej Desh <orivej@gmx.fr>
+Date: Sat, 25 Feb 2017 15:14:21 +0000
+Subject: [PATCH 3/6] ISO date
+
+---
+ Telegram/SourceFiles/dialogs/dialogs_layout.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Telegram/SourceFiles/dialogs/dialogs_layout.cpp b/Telegram/SourceFiles/dialogs/dialogs_layout.cpp
+index b4710d6..0e66485 100644
+--- a/Telegram/SourceFiles/dialogs/dialogs_layout.cpp
++++ b/Telegram/SourceFiles/dialogs/dialogs_layout.cpp
+@@ -49,7 +49,7 @@ void paintRowDate(Painter &p, const QDateTime &date, QRect &rectForName, bool ac
+ 	} else if (lastDate.year() == nowDate.year() && lastDate.weekNumber() == nowDate.weekNumber()) {
+ 		dt = langDayOfWeek(lastDate);
+ 	} else {
+-		dt = lastDate.toString(qsl("d.MM.yy"));
++		dt = lastDate.toString(qsl("yyyy-MM-dd"));
+ 	}
+ 	int32 dtWidth = st::dialogsDateFont->width(dt);
+ 	rectForName.setWidth(rectForName.width() - dtWidth - st::dialogsDateSkip);
+-- 
+2.11.0
+

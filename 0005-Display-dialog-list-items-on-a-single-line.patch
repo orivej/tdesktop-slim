@@ -1,0 +1,109 @@
+From 37053e928146233b4bd2a75359bde4fb7eeb4551 Mon Sep 17 00:00:00 2001
+From: Orivej Desh <orivej@gmx.fr>
+Date: Sat, 25 Feb 2017 15:23:57 +0000
+Subject: [PATCH 5/6] Display dialog list items on a single line
+
+---
+ Telegram/SourceFiles/dialogs/dialogs.style      | 10 +++++-----
+ Telegram/SourceFiles/dialogs/dialogs_layout.cpp | 25 ++++++++++++++-----------
+ 2 files changed, 19 insertions(+), 16 deletions(-)
+
+diff --git a/Telegram/SourceFiles/dialogs/dialogs.style b/Telegram/SourceFiles/dialogs/dialogs.style
+index f32e758..8d7f6f6 100644
+--- a/Telegram/SourceFiles/dialogs/dialogs.style
++++ b/Telegram/SourceFiles/dialogs/dialogs.style
+@@ -38,14 +38,14 @@ dialogsTextStyle: TextStyle(defaultTextStyle) {
+ }
+ dialogsDateFont: font(13px);
+ dialogsDateSkip: 5px;
+-dialogsNameTop: 2px;
++dialogsNameTop: -3px;
+ 
+-dialogsRowHeight: 62px;
++dialogsRowHeight: 20px;
+ dialogsFilterPadding: point(7px, 7px);
+ dialogsFilterSkip: 4px;
+-dialogsPhotoSize: 46px;
+-dialogsPhotoPadding: 12px;
+-dialogsPadding: point(10px, 8px);
++dialogsPhotoSize: 12px;
++dialogsPhotoPadding: 4px;
++dialogsPadding: point(5px, 4px);
+ 
+ dialogsImportantBarHeight: 37px;
+ 
+diff --git a/Telegram/SourceFiles/dialogs/dialogs_layout.cpp b/Telegram/SourceFiles/dialogs/dialogs_layout.cpp
+index 0e66485..ab83e53 100644
+--- a/Telegram/SourceFiles/dialogs/dialogs_layout.cpp
++++ b/Telegram/SourceFiles/dialogs/dialogs_layout.cpp
+@@ -116,8 +116,6 @@ void paintRow(Painter &p, const RippleRow *row, History *history, HistoryItem *i
+ 		}
+ 	} else if (!item->isEmpty()) {
+ 		paintRowDate(p, date, rectForName, active, selected);
+-
+-		paintItemCallback(nameleft, namewidth, item);
+ 	}
+ 	auto sendStateIcon = ([draft, item, active, selected]() -> const style::icon* {
+ 		if (draft) {
+@@ -146,6 +144,11 @@ void paintRow(Painter &p, const RippleRow *row, History *history, HistoryItem *i
+ 		icon->paint(p, rectForName.topLeft() + QPoint(qMin(history->peer->dialogName().maxWidth(), rectForName.width()), 0), fullWidth);
+ 	}
+ 
++	if (item && !item->isEmpty()) {
++		int newWidth = paintItemCallback(rectForName.left(), rectForName.width(), item);
++		rectForName.setWidth(newWidth);
++	}
++
+ 	p.setPen(active ? st::dialogsNameFgActive : (selected ? st::dialogsNameFgOver : st::dialogsNameFg));
+ 	history->peer->dialogName().drawElided(p, rectForName.left(), rectForName.top(), rectForName.width());
+ }
+@@ -281,14 +284,15 @@ void RowPainter::paint(Painter &p, const Row *row, int fullWidth, bool active, b
+ 	if (item && cloudDraft && unreadCount > 0) {
+ 		cloudDraft = nullptr; // Draw item, if draft is older.
+ 	}
+-	paintRow(p, row, history, item, cloudDraft, displayDate(), fullWidth, active, selected, onlyBackground, ms, [&p, fullWidth, active, selected, ms, history, unreadCount](int nameleft, int namewidth, HistoryItem *item) {
++	paintRow(p, row, history, item, cloudDraft, displayDate(), fullWidth, active, selected, onlyBackground, ms, [&p, fullWidth, active, selected, ms, history, unreadCount](int nameleft, int namewidth, HistoryItem *item) -> int {
+ 		int availableWidth = namewidth;
+-		int texttop = st::dialogsPadding.y() + st::msgNameFont->height + st::dialogsSkip;
++		int availableFullWidth = nameleft + namewidth;
++		int texttop = st::dialogsPadding.y();
+ 		if (unreadCount) {
+ 			auto counter = QString::number(unreadCount);
+ 			auto mutedCounter = history->mute();
+-			auto unreadRight = fullWidth - st::dialogsPadding.x();
+-			auto unreadTop = texttop + st::dialogsTextFont->ascent - st::dialogsUnreadFont->ascent - (st::dialogsUnreadHeight - st::dialogsUnreadFont->height) / 2;
++			auto unreadRight = availableFullWidth - st::dialogsPadding.x();
++			auto unreadTop = (1 + st::dialogsRowHeight - st::dialogsUnreadHeight) / 2;
+ 			auto unreadWidth = 0;
+ 
+ 			UnreadBadgeStyle st;
+@@ -298,13 +302,11 @@ void RowPainter::paint(Painter &p, const Row *row, int fullWidth, bool active, b
+ 			availableWidth -= unreadWidth + st.padding;
+ 		} else if (history->isPinnedDialog()) {
+ 			auto &icon = (active ? st::dialogsPinnedIconActive : (selected ? st::dialogsPinnedIconOver : st::dialogsPinnedIcon));
+-			icon.paint(p, fullWidth - st::dialogsPadding.x() - icon.width(), texttop, fullWidth);
++			icon.paint(p, availableFullWidth - st::dialogsPadding.x() - icon.width(), texttop, availableFullWidth);
+ 			availableWidth -= icon.width() + st::dialogsUnreadPadding;
+ 		}
+ 		auto &color = active ? st::dialogsTextFgServiceActive : (selected ? st::dialogsTextFgServiceOver : st::dialogsTextFgService);
+-		if (!history->paintSendAction(p, nameleft, texttop, availableWidth, fullWidth, color, ms)) {
+-			item->drawInDialog(p, QRect(nameleft, texttop, availableWidth, st::dialogsTextFont->height), active, selected, history->textCachedFor, history->lastItemTextCache);
+-		}
++		return availableWidth;
+ 	}, [&p, fullWidth, active, selected, ms, history, unreadCount] {
+ 		if (unreadCount) {
+ 			auto counter = QString::number(unreadCount);
+@@ -328,8 +330,9 @@ void RowPainter::paint(Painter &p, const FakeRow *row, int fullWidth, bool activ
+ 	auto item = row->item();
+ 	auto history = item->history();
+ 	paintRow(p, row, history, item, nullptr, item->date, fullWidth, active, selected, onlyBackground, ms, [&p, row, active, selected](int nameleft, int namewidth, HistoryItem *item) {
+-		int lastWidth = namewidth, texttop = st::dialogsPadding.y() + st::msgNameFont->height + st::dialogsSkip;
++		int lastWidth = namewidth, texttop = st::dialogsPadding.y();
+ 		item->drawInDialog(p, QRect(nameleft, texttop, lastWidth, st::dialogsTextFont->height), active, selected, row->_cacheFor, row->_cache);
++		return namewidth;
+ 	}, [] {
+ 	});
+ }
+-- 
+2.11.0
+

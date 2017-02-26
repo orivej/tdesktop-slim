@@ -1,0 +1,25 @@
+From a71487cdb0a97146842f5e973864243a8844fd6f Mon Sep 17 00:00:00 2001
+From: Orivej Desh <orivej@gmx.fr>
+Date: Sat, 25 Feb 2017 15:27:58 +0000
+Subject: [PATCH 6/6] Fix fullWidth?
+
+---
+ Telegram/SourceFiles/dialogswidget.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Telegram/SourceFiles/dialogswidget.cpp b/Telegram/SourceFiles/dialogswidget.cpp
+index 4b29b5c..209a688 100644
+--- a/Telegram/SourceFiles/dialogswidget.cpp
++++ b/Telegram/SourceFiles/dialogswidget.cpp
+@@ -132,7 +132,7 @@ void DialogsInner::paintRegion(Painter &p, const QRegion &region, bool paintingO
+ 	if (!paintingOther) {
+ 		p.setClipRect(r);
+ 	}
+-	auto fullWidth = getFullWidth();
++	auto fullWidth = getFullWidth() - 10;
+ 	auto ms = getms();
+ 	if (_state == DefaultState) {
+ 		QRect dialogsClip = r;
+-- 
+2.11.0
+
