@@ -1,0 +1,29 @@
+From a6dc4aedb6bf27d04aaffb6a3647829d4b9fb703 Mon Sep 17 00:00:00 2001
+From: Orivej Desh <orivej@gmx.fr>
+Date: Sat, 25 Feb 2017 23:07:01 +0300
+Subject: [PATCH 6/7] Delete verified icon in the dialog list
+
+---
+ Telegram/SourceFiles/dialogs/dialogs_layout.cpp | 6 ------
+ 1 file changed, 6 deletions(-)
+
+diff --git a/Telegram/SourceFiles/dialogs/dialogs_layout.cpp b/Telegram/SourceFiles/dialogs/dialogs_layout.cpp
+index 8328191..a9424c7 100644
+--- a/Telegram/SourceFiles/dialogs/dialogs_layout.cpp
++++ b/Telegram/SourceFiles/dialogs/dialogs_layout.cpp
+@@ -150,12 +150,6 @@ void paintRow(Painter &p, const RippleRow *row, History *history, HistoryItem *i
+ 		sendStateIcon->paint(p, rectForName.topLeft() + QPoint(rectForName.width(), 0), fullWidth);
+ 	}
+ 
+-	if (history->peer->isVerified()) {
+-		auto icon = &(active ? st::dialogsVerifiedIconActive : (selected ? st::dialogsVerifiedIconOver : st::dialogsVerifiedIcon));
+-		rectForName.setWidth(rectForName.width() - icon->width());
+-		icon->paint(p, rectForName.topLeft() + QPoint(qMin(history->peer->dialogName().maxWidth(), rectForName.width()), 0), fullWidth);
+-	}
+-
+ 	if (item && !item->isEmpty()) {
+ 		int newWidth = paintItemCallback(rectForName.left(), rectForName.width(), item);
+ 		rectForName.setWidth(newWidth);
+-- 
+2.7.4
+

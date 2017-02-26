@@ -1,14 +1,14 @@
-From ebd1f383e20f59cf083a04023750419610cde78e Mon Sep 17 00:00:00 2001
+From 7dbe3a58773830a09815445708358c5d2b24bb0f Mon Sep 17 00:00:00 2001
 From: Orivej Desh <orivej@gmx.fr>
 Date: Sat, 25 Feb 2017 15:14:21 +0000
-Subject: [PATCH 3/6] ISO date
+Subject: [PATCH 2/7] ISO date
 
 ---
  Telegram/SourceFiles/dialogs/dialogs_layout.cpp | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Telegram/SourceFiles/dialogs/dialogs_layout.cpp b/Telegram/SourceFiles/dialogs/dialogs_layout.cpp
-index b4710d6..0e66485 100644
+index fff4097..8d9b5c2 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs_layout.cpp
 +++ b/Telegram/SourceFiles/dialogs/dialogs_layout.cpp
 @@ -49,7 +49,7 @@ void paintRowDate(Painter &p, const QDateTime &date, QRect &rectForName, bool ac
@@ -21,5 +21,5 @@ index b4710d6..0e66485 100644
  	int32 dtWidth = st::dialogsDateFont->width(dt);
  	rectForName.setWidth(rectForName.width() - dtWidth - st::dialogsDateSkip);
 -- 
-2.11.0
+2.7.4
 

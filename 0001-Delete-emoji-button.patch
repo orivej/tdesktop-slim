@@ -1,18 +1,18 @@
-From decc28fa24fc38e3c0a8bffa0efe0d221d9cc339 Mon Sep 17 00:00:00 2001
+From 7573accdf48a6da243248c79a0f88f8b2b594c14 Mon Sep 17 00:00:00 2001
 From: Orivej Desh <orivej@gmx.fr>
 Date: Sat, 25 Feb 2017 00:10:51 +0000
-Subject: [PATCH 1/6] Delete emoji button
+Subject: [PATCH 1/7] Delete emoji button
 
 ---
- Telegram/SourceFiles/historywidget.cpp | 40 ++++++++--------------------------------
+ Telegram/SourceFiles/historywidget.cpp | 40 +++++++---------------------------
  Telegram/SourceFiles/historywidget.h   |  1 -
  2 files changed, 8 insertions(+), 33 deletions(-)
 
 diff --git a/Telegram/SourceFiles/historywidget.cpp b/Telegram/SourceFiles/historywidget.cpp
-index 78af10a..4e1ff48 100644
+index e09d657..5c3b35d 100644
 --- a/Telegram/SourceFiles/historywidget.cpp
 +++ b/Telegram/SourceFiles/historywidget.cpp
-@@ -3069,7 +3069,6 @@ HistoryWidget::HistoryWidget(QWidget *parent) : TWidget(parent)
+@@ -3115,7 +3115,6 @@ HistoryWidget::HistoryWidget(QWidget *parent) : TWidget(parent)
  , _joinChannel(this, lang(lng_channel_join).toUpper(), st::historyComposeButton)
  , _muteUnmute(this, lang(lng_channel_mute).toUpper(), st::historyComposeButton)
  , _attachToggle(this, st::historyAttach)
@@ -20,7 +20,7 @@ index 78af10a..4e1ff48 100644
  , _botKeyboardShow(this, st::historyBotKeyboardShow)
  , _botKeyboardHide(this, st::historyBotKeyboardHide)
  , _botCommandStart(this, st::historyBotCommandStart)
-@@ -3186,14 +3185,11 @@ HistoryWidget::HistoryWidget(QWidget *parent) : TWidget(parent)
+@@ -3230,14 +3229,11 @@ HistoryWidget::HistoryWidget(QWidget *parent) : TWidget(parent)
  	_reportSpamPanel->hide();
  
  	_attachToggle->hide();
@@ -35,7 +35,7 @@ index 78af10a..4e1ff48 100644
  	connect(_botKeyboardShow, SIGNAL(clicked()), this, SLOT(onKbToggle()));
  	connect(_botKeyboardHide, SIGNAL(clicked()), this, SLOT(onKbToggle()));
  	connect(_botCommandStart, SIGNAL(clicked()), this, SLOT(onCmdStart()));
-@@ -3591,7 +3587,6 @@ void HistoryWidget::notify_botCommandsChanged(UserData *user) {
+@@ -3635,7 +3631,6 @@ void HistoryWidget::notify_botCommandsChanged(UserData *user) {
  }
  
  void HistoryWidget::notify_inlineBotRequesting(bool requesting) {
@@ -43,7 +43,7 @@ index 78af10a..4e1ff48 100644
  }
  
  void HistoryWidget::notify_replyMarkupUpdated(const HistoryItem *item) {
-@@ -4551,7 +4546,6 @@ void HistoryWidget::updateControlsVisibility() {
+@@ -4595,7 +4590,6 @@ void HistoryWidget::updateControlsVisibility() {
  		_field->hide();
  		_fieldBarCancel->hide();
  		_attachToggle->hide();
@@ -51,7 +51,7 @@ index 78af10a..4e1ff48 100644
  		_silent->hide();
  		_historyDown->hide();
  		_botKeyboardShow->hide();
-@@ -4611,7 +4605,6 @@ void HistoryWidget::updateControlsVisibility() {
+@@ -4655,7 +4649,6 @@ void HistoryWidget::updateControlsVisibility() {
  		_kbScroll->hide();
  		_fieldBarCancel->hide();
  		_attachToggle->hide();
@@ -59,7 +59,7 @@ index 78af10a..4e1ff48 100644
  		_botKeyboardShow->hide();
  		_botKeyboardHide->hide();
  		_botCommandStart->hide();
-@@ -4634,7 +4627,6 @@ void HistoryWidget::updateControlsVisibility() {
+@@ -4678,7 +4671,6 @@ void HistoryWidget::updateControlsVisibility() {
  			_kbShown = false;
  			_send->hide();
  			_field->hide();
@@ -67,7 +67,7 @@ index 78af10a..4e1ff48 100644
  			_botKeyboardShow->hide();
  			_botKeyboardHide->hide();
  			_botCommandStart->hide();
-@@ -4651,7 +4643,6 @@ void HistoryWidget::updateControlsVisibility() {
+@@ -4695,7 +4687,6 @@ void HistoryWidget::updateControlsVisibility() {
  			updateSendButtonType();
  			if (_recording) {
  				_field->hide();
@@ -75,7 +75,7 @@ index 78af10a..4e1ff48 100644
  				_botKeyboardShow->hide();
  				_botKeyboardHide->hide();
  				_botCommandStart->hide();
-@@ -4666,19 +4657,16 @@ void HistoryWidget::updateControlsVisibility() {
+@@ -4710,19 +4701,16 @@ void HistoryWidget::updateControlsVisibility() {
  				_field->show();
  				if (_kbShown) {
  					_kbScroll->show();
@@ -95,7 +95,7 @@ index 78af10a..4e1ff48 100644
  					_botKeyboardHide->hide();
  					if (_keyboard->hasMarkup()) {
  						_botKeyboardShow->show();
-@@ -4722,7 +4710,6 @@ void HistoryWidget::updateControlsVisibility() {
+@@ -4766,7 +4754,6 @@ void HistoryWidget::updateControlsVisibility() {
  		_kbScroll->hide();
  		_fieldBarCancel->hide();
  		_attachToggle->hide();
@@ -103,7 +103,7 @@ index 78af10a..4e1ff48 100644
  		_botKeyboardShow->hide();
  		_botKeyboardHide->hide();
  		_botCommandStart->hide();
-@@ -5465,7 +5452,6 @@ void HistoryWidget::showAnimated(Window::SlideDirection direction, const Window:
+@@ -5509,7 +5496,6 @@ void HistoryWidget::showAnimated(Window::SlideDirection direction, const Window:
  	_reportSpamPanel->hide();
  	_historyDown->hide();
  	_attachToggle->hide();
@@ -111,7 +111,7 @@ index 78af10a..4e1ff48 100644
  	_fieldAutocomplete->hide();
  	_silent->hide();
  	_botKeyboardShow->hide();
-@@ -6164,11 +6150,6 @@ void HistoryWidget::onKbToggle(bool manual) {
+@@ -6206,11 +6192,6 @@ void HistoryWidget::onKbToggle(bool manual) {
  		}
  	}
  	resizeEvent(0);
@@ -123,7 +123,7 @@ index 78af10a..4e1ff48 100644
  	updateField();
  }
  
-@@ -6385,7 +6366,7 @@ void HistoryWidget::moveFieldControls() {
+@@ -6427,7 +6408,7 @@ void HistoryWidget::moveFieldControls() {
  	}
  
  // _attachToggle --------------------------------------------------------- _emojiPan --------- _fieldBarCancel
@@ -132,7 +132,7 @@ index 78af10a..4e1ff48 100644
  // (_botStart|_unblock|_joinChannel|_muteUnmute)
  
  	auto buttonsBottom = bottom - _attachToggle->height();
-@@ -6394,8 +6375,7 @@ void HistoryWidget::moveFieldControls() {
+@@ -6436,8 +6417,7 @@ void HistoryWidget::moveFieldControls() {
  	_field->moveToLeft(left, bottom - _field->height() - st::historySendPadding);
  	auto right = st::historySendRight;
  	_send->moveToRight(right, buttonsBottom); right += _send->width();
@@ -142,7 +142,7 @@ index 78af10a..4e1ff48 100644
  	_botKeyboardShow->moveToRight(right, buttonsBottom);
  	_botCommandStart->moveToRight(right, buttonsBottom);
  	_silent->moveToRight(right, buttonsBottom);
-@@ -6414,7 +6394,7 @@ void HistoryWidget::updateFieldSize() {
+@@ -6456,7 +6436,7 @@ void HistoryWidget::updateFieldSize() {
  	auto kbShowShown = _history && !_kbShown && _keyboard->hasMarkup();
  	auto fieldWidth = width() - _attachToggle->width() - st::historySendRight;
  	fieldWidth -= _send->width();
@@ -151,7 +151,7 @@ index 78af10a..4e1ff48 100644
  	if (kbShowShown) fieldWidth -= _botKeyboardShow->width();
  	if (_cmdStartShown) fieldWidth -= _botCommandStart->width();
  	if (hasSilentToggle()) fieldWidth -= _silent->width();
-@@ -7116,7 +7096,7 @@ void HistoryWidget::updateControlsGeometry() {
+@@ -7158,7 +7138,7 @@ void HistoryWidget::updateControlsGeometry() {
  	updateHistoryDownPosition();
  
  	_emojiPan->setMinTop(0);
@@ -160,7 +160,7 @@ index 78af10a..4e1ff48 100644
  	if (_membersDropdown) {
  		_membersDropdown->setMaxHeight(countMembersDropdownHeightMax());
  	}
-@@ -7401,11 +7381,9 @@ void HistoryWidget::updateBotKeyboard(History *h, bool force) {
+@@ -7443,11 +7423,9 @@ void HistoryWidget::updateBotKeyboard(History *h, bool force) {
  			if (!_a_show.animating()) {
  				if (hasMarkup) {
  					_kbScroll->show();
@@ -172,7 +172,7 @@ index 78af10a..4e1ff48 100644
  					_botKeyboardHide->hide();
  				}
  				_botKeyboardShow->hide();
-@@ -7424,7 +7402,6 @@ void HistoryWidget::updateBotKeyboard(History *h, bool force) {
+@@ -7466,7 +7444,6 @@ void HistoryWidget::updateBotKeyboard(History *h, bool force) {
  		} else {
  			if (!_a_show.animating()) {
  				_kbScroll->hide();
@@ -180,7 +180,7 @@ index 78af10a..4e1ff48 100644
  				_botKeyboardHide->hide();
  				_botKeyboardShow->show();
  				_botCommandStart->hide();
-@@ -7440,7 +7417,6 @@ void HistoryWidget::updateBotKeyboard(History *h, bool force) {
+@@ -7482,7 +7459,6 @@ void HistoryWidget::updateBotKeyboard(History *h, bool force) {
  	} else {
  		if (!_scroll->isHidden()) {
  			_kbScroll->hide();
@@ -188,7 +188,7 @@ index 78af10a..4e1ff48 100644
  			_botKeyboardHide->hide();
  			_botKeyboardShow->hide();
  			_botCommandStart->show();
-@@ -8074,7 +8050,7 @@ void HistoryWidget::cancelReplyAfterMediaSend(bool lastKeyboardUsed) {
+@@ -8116,7 +8092,7 @@ void HistoryWidget::cancelReplyAfterMediaSend(bool lastKeyboardUsed) {
  
  int HistoryWidget::countMembersDropdownHeightMax() const {
  	int result = height() - st::membersInnerDropdown.padding.top() - st::membersInnerDropdown.padding.bottom();
@@ -197,7 +197,7 @@ index 78af10a..4e1ff48 100644
  	accumulate_min(result, st::membersInnerHeightMax);
  	return result;
  }
-@@ -8734,16 +8710,16 @@ void HistoryWidget::drawRecording(Painter &p, float64 recordActive) {
+@@ -8776,16 +8752,16 @@ void HistoryWidget::drawRecording(Painter &p, float64 recordActive) {
  	auto d = 2 * qRound(st::historyRecordSignalMin + (delta * (st::historyRecordSignalMax - st::historyRecordSignalMin)));
  	{
  		PainterHighQualityEnabler hq(p);
@@ -205,7 +205,7 @@ index 78af10a..4e1ff48 100644
 +		p.drawEllipse(_attachToggle->x() + (_botKeyboardHide->width() - d) / 2, _attachToggle->y() + (_attachToggle->height() - d) / 2, d, d);
  	}
  
- 	QString duration = formatDurationText(_recordingSamples / AudioVoiceMsgFrequency);
+ 	auto duration = formatDurationText(_recordingSamples / Media::Player::kDefaultFrequency);
  	p.setFont(st::historyRecordFont);
  
  	p.setPen(st::historyRecordDurationFg);
@@ -218,7 +218,7 @@ index 78af10a..4e1ff48 100644
  
  	p.setPen(anim::pen(st::historyRecordCancel, st::historyRecordCancelActive, 1. - recordActive));
 diff --git a/Telegram/SourceFiles/historywidget.h b/Telegram/SourceFiles/historywidget.h
-index fedf4a6..e142fee 100644
+index 3b09b4d..b3009cd 100644
 --- a/Telegram/SourceFiles/historywidget.h
 +++ b/Telegram/SourceFiles/historywidget.h
 @@ -1119,7 +1119,6 @@ private:
@@ -230,5 +230,5 @@ index fedf4a6..e142fee 100644
  	object_ptr<Ui::IconButton> _botKeyboardHide;
  	object_ptr<Ui::IconButton> _botCommandStart;
 -- 
-2.11.0
+2.7.4
 

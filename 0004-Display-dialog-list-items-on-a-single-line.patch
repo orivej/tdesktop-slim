@@ -1,12 +1,12 @@
-From 37053e928146233b4bd2a75359bde4fb7eeb4551 Mon Sep 17 00:00:00 2001
+From 044a9ad58215ace9bfdf8ab64694a97e49dce384 Mon Sep 17 00:00:00 2001
 From: Orivej Desh <orivej@gmx.fr>
 Date: Sat, 25 Feb 2017 15:23:57 +0000
-Subject: [PATCH 5/6] Display dialog list items on a single line
+Subject: [PATCH 4/7] Display dialog list items on a single line
 
 ---
- Telegram/SourceFiles/dialogs/dialogs.style      | 10 +++++-----
- Telegram/SourceFiles/dialogs/dialogs_layout.cpp | 25 ++++++++++++++-----------
- 2 files changed, 19 insertions(+), 16 deletions(-)
+ Telegram/SourceFiles/dialogs/dialogs.style      | 10 ++++-----
+ Telegram/SourceFiles/dialogs/dialogs_layout.cpp | 27 ++++++++++++++-----------
+ 2 files changed, 20 insertions(+), 17 deletions(-)
 
 diff --git a/Telegram/SourceFiles/dialogs/dialogs.style b/Telegram/SourceFiles/dialogs/dialogs.style
 index f32e758..8d7f6f6 100644
@@ -33,19 +33,28 @@ index f32e758..8d7f6f6 100644
  dialogsImportantBarHeight: 37px;
  
 diff --git a/Telegram/SourceFiles/dialogs/dialogs_layout.cpp b/Telegram/SourceFiles/dialogs/dialogs_layout.cpp
-index 0e66485..ab83e53 100644
+index 8d9b5c2..8328191 100644
 --- a/Telegram/SourceFiles/dialogs/dialogs_layout.cpp
 +++ b/Telegram/SourceFiles/dialogs/dialogs_layout.cpp
-@@ -116,8 +116,6 @@ void paintRow(Painter &p, const RippleRow *row, History *history, HistoryItem *i
+@@ -76,7 +76,7 @@ void paintRow(Painter &p, const RippleRow *row, History *history, HistoryItem *i
+ 		return;
+ 	}
+ 
+-	auto namewidth = fullWidth - nameleft - st::dialogsPadding.x();
++	auto namewidth = fullWidth - nameleft - st::dialogsPadding.x() - 10;
+ 	QRect rectForName(nameleft, st::dialogsPadding.y() + st::dialogsNameTop, namewidth, st::msgNameFont->height);
+ 
+ 	if (auto chatTypeIcon = ChatTypeIcon(history->peer, active, selected)) {
+@@ -123,8 +123,6 @@ void paintRow(Painter &p, const RippleRow *row, History *history, HistoryItem *i
  		}
  	} else if (!item->isEmpty()) {
  		paintRowDate(p, date, rectForName, active, selected);
 -
 -		paintItemCallback(nameleft, namewidth, item);
- 	}
- 	auto sendStateIcon = ([draft, item, active, selected]() -> const style::icon* {
- 		if (draft) {
-@@ -146,6 +144,11 @@ void paintRow(Painter &p, const RippleRow *row, History *history, HistoryItem *i
+ 	} else if (history->isPinnedDialog()) {
+ 		auto availableWidth = namewidth;
+ 		auto &icon = (active ? st::dialogsPinnedIconActive : (selected ? st::dialogsPinnedIconOver : st::dialogsPinnedIcon));
+@@ -158,6 +156,11 @@ void paintRow(Painter &p, const RippleRow *row, History *history, HistoryItem *i
  		icon->paint(p, rectForName.topLeft() + QPoint(qMin(history->peer->dialogName().maxWidth(), rectForName.width()), 0), fullWidth);
  	}
  
@@ -57,7 +66,7 @@ index 0e66485..ab83e53 100644
  	p.setPen(active ? st::dialogsNameFgActive : (selected ? st::dialogsNameFgOver : st::dialogsNameFg));
  	history->peer->dialogName().drawElided(p, rectForName.left(), rectForName.top(), rectForName.width());
  }
-@@ -281,14 +284,15 @@ void RowPainter::paint(Painter &p, const Row *row, int fullWidth, bool active, b
+@@ -293,14 +296,15 @@ void RowPainter::paint(Painter &p, const Row *row, int fullWidth, bool active, b
  	if (item && cloudDraft && unreadCount > 0) {
  		cloudDraft = nullptr; // Draw item, if draft is older.
  	}
@@ -77,7 +86,7 @@ index 0e66485..ab83e53 100644
  			auto unreadWidth = 0;
  
  			UnreadBadgeStyle st;
-@@ -298,13 +302,11 @@ void RowPainter::paint(Painter &p, const Row *row, int fullWidth, bool active, b
+@@ -310,13 +314,11 @@ void RowPainter::paint(Painter &p, const Row *row, int fullWidth, bool active, b
  			availableWidth -= unreadWidth + st.padding;
  		} else if (history->isPinnedDialog()) {
  			auto &icon = (active ? st::dialogsPinnedIconActive : (selected ? st::dialogsPinnedIconOver : st::dialogsPinnedIcon));
@@ -93,7 +102,7 @@ index 0e66485..ab83e53 100644
  	}, [&p, fullWidth, active, selected, ms, history, unreadCount] {
  		if (unreadCount) {
  			auto counter = QString::number(unreadCount);
-@@ -328,8 +330,9 @@ void RowPainter::paint(Painter &p, const FakeRow *row, int fullWidth, bool activ
+@@ -340,8 +342,9 @@ void RowPainter::paint(Painter &p, const FakeRow *row, int fullWidth, bool activ
  	auto item = row->item();
  	auto history = item->history();
  	paintRow(p, row, history, item, nullptr, item->date, fullWidth, active, selected, onlyBackground, ms, [&p, row, active, selected](int nameleft, int namewidth, HistoryItem *item) {
@@ -105,5 +114,5 @@ index 0e66485..ab83e53 100644
  	});
  }
 -- 
-2.11.0
+2.7.4
 

@@ -1,17 +1,17 @@
-From 0d12d54729b99f1d5c9f718a41d61cfa750ba1cc Mon Sep 17 00:00:00 2001
+From 81f1bce92a804c9dd4eb9de9ea56de8e936adef6 Mon Sep 17 00:00:00 2001
 From: Orivej Desh <orivej@gmx.fr>
 Date: Sat, 25 Feb 2017 15:14:35 +0000
-Subject: [PATCH 4/6] No stickers
+Subject: [PATCH 3/7] No stickers
 
 ---
  Telegram/Resources/basic.style | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Telegram/Resources/basic.style b/Telegram/Resources/basic.style
-index 9e00b7a..183aea4 100644
+index fccc96f..5057e33 100644
 --- a/Telegram/Resources/basic.style
 +++ b/Telegram/Resources/basic.style
-@@ -203,9 +203,9 @@ dragPadding: margins(20px, 10px, 20px, 10px);
+@@ -228,9 +228,9 @@ dragPadding: margins(20px, 10px, 20px, 10px);
  
  dragHeight: 72px;
  
@@ -24,5 +24,5 @@ index 9e00b7a..183aea4 100644
  maxSignatureSize: 144px;
  
 -- 
-2.11.0
+2.7.4
 
