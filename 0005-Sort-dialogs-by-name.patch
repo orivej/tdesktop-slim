@@ -29,7 +29,7 @@ index 0c20417..b03d7b4 100644
 +		_sortKeyInChatList = pinnedDialogPos(_pinnedIndex);
 +	} else {
 +		const QByteArray& name = peer->dialogName().originalText().toUtf8();
-+		uchar namebytes[8];
++		uchar namebytes[8] = {};
 +		memcpy(namebytes, name, qMin(8, name.size()));
 +		_sortKeyInChatList = -qFromBigEndian<qint64>(&namebytes[0]);
 +	}
